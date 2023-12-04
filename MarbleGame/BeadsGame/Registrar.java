@@ -1,39 +1,40 @@
 package GlassBeadGame;
 
+
 import javax.swing.*;
 
 public class Registrar {
 
-
-    public boolean ChooseEven() {
-        String input = JOptionPane.showInputDialog("홀/짝을 입력하세요.");
-        input = input.trim();
-        while (!input.equals("홀") && !input.equals("짝")) {
-            String input0 = JOptionPane.showInputDialog("홀/짝을 입력하세요.");
-            input = input0.trim();
+    public boolean chooseEven() {
+        String input = JOptionPane.showInputDialog("홀/짝?").trim();
+        while (true) {
+            if ("홀".equals(input) || "짝".equals(input)) {
+                return "짝".equals(input);
+            } else {
+                input = JOptionPane.showInputDialog("홀/짝?").trim();
+            }
         }
-        // 짝이 true, 홀이 false
-        if (input.equals("짝")) return true;
-        else return false;
     }
 
     public int chooseForAttack(int max) {
-        String input = JOptionPane.showInputDialog("공격: 구슬의 수를 입력하세요. (최소 1)");
-        int x  = Integer.parseInt(input);
-        while(x > max || x > 5 || x < 1) {
-            input = JOptionPane.showInputDialog("공격: 구슬의 수를 입력하세요. (최소 1)");
-            x = Integer.parseInt(input);
+        int n = Integer.parseInt(JOptionPane.showInputDialog("공격! 몇개를 선택할래요?"));
+        while (true) {
+            if (1 <= n && n <= 5 && n <= max) {
+                return n;
+            } else {
+                n = Integer.parseInt(JOptionPane.showInputDialog("공격! 몇개를 선택할래요?"));
+            }
         }
-        return x;
     }
 
     public int chooseForGuard(int max) {
-        String input = JOptionPane.showInputDialog("방어: 구슬의 수를 입력하세요. (최소 0)");
-        int y = Integer.parseInt(input);
-        while(y > max || y > 5 || y < 0) {
-            input = JOptionPane.showInputDialog("방어: 구슬의 수를 입력하세요. (최소 0)");
-            y = Integer.parseInt(input);
+        int n = Integer.parseInt(JOptionPane.showInputDialog("방어! 몇개를 선택할래요?"));
+        while (true) {
+            if (0 <= n && n <= 5 && n <= max) {
+                return n;
+            } else {
+                n = Integer.parseInt(JOptionPane.showInputDialog("방어! 몇개를 선택할래요?"));
+            }
         }
-        return y;
     }
 }
