@@ -1,5 +1,6 @@
 package MemoryGame;
 
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -14,6 +15,7 @@ public class MemoryGame extends JFrame implements ActionListener {
     private int clickedCard1;
     private int clickedCard2;
     private boolean processing;
+    private Color[] cardColors;
 
     public MemoryGame() {
         setTitle("Memory Game");
@@ -27,6 +29,17 @@ public class MemoryGame extends JFrame implements ActionListener {
         clickedCard1 = -1;
         clickedCard2 = -1;
         processing = false;
+
+        // 색상 배열 초기화
+        cardColors = new Color[8];
+        cardColors[0] = Color.RED;
+        cardColors[1] = Color.BLUE;
+        cardColors[2] = Color.GREEN;
+        cardColors[3] = Color.YELLOW;
+        cardColors[4] = Color.ORANGE;
+        cardColors[5] = Color.PINK;
+        cardColors[6] = Color.CYAN;
+        cardColors[7] = Color.MAGENTA;
 
         // 숫자 카드 랜덤으로 초기화
         for (int i = 0; i < 8; i++) {
@@ -55,11 +68,11 @@ public class MemoryGame extends JFrame implements ActionListener {
                 if (clickedCard1 == -1) {
                     clickedCard1 = i;
                     flipped[i] = true;
-                    buttons[i].setText(String.valueOf(cardNumbers.get(i)));
+                    buttons[i].setBackground(cardColors[cardNumbers.get(i)]);
                 } else if (clickedCard2 == -1 && i != clickedCard1) {
                     clickedCard2 = i;
                     flipped[i] = true;
-                    buttons[i].setText(String.valueOf(cardNumbers.get(i)));
+                    buttons[i].setBackground(cardColors[cardNumbers.get(i)]);
                     processing = true;
                     Timer timer = new Timer(1000, new ActionListener() {
                         public void actionPerformed(ActionEvent evt) {
@@ -79,8 +92,8 @@ public class MemoryGame extends JFrame implements ActionListener {
             buttons[clickedCard1].setEnabled(false);
             buttons[clickedCard2].setEnabled(false);
         } else {
-            buttons[clickedCard1].setText("");
-            buttons[clickedCard2].setText("");
+            buttons[clickedCard1].setBackground(null);
+            buttons[clickedCard2].setBackground(null);
             flipped[clickedCard1] = false;
             flipped[clickedCard2] = false;
         }
