@@ -15,7 +15,7 @@ public class MemoryGame extends JFrame implements ActionListener {
     private int clickedCard1;
     private int clickedCard2;
     private boolean processing;
-    private Color[] cardColors;
+    private ImageIcon[] cardImages; // 이미지 배열 추가
 
     public MemoryGame() {
         setTitle("Memory Game");
@@ -30,16 +30,17 @@ public class MemoryGame extends JFrame implements ActionListener {
         clickedCard2 = -1;
         processing = false;
 
-        // 색상 배열 초기화
-        cardColors = new Color[8];
-        cardColors[0] = Color.RED;
-        cardColors[1] = Color.BLUE;
-        cardColors[2] = Color.GREEN;
-        cardColors[3] = Color.YELLOW;
-        cardColors[4] = Color.ORANGE;
-        cardColors[5] = Color.PINK;
-        cardColors[6] = Color.CYAN;
-        cardColors[7] = Color.MAGENTA;
+        // 이미지 배열 초기화
+        cardImages = new ImageIcon[8];
+        cardImages[0] = resizeImageIcon(new ImageIcon("src/image1.jpg"));
+        cardImages[1] = resizeImageIcon(new ImageIcon("src/image2.jpg"));
+        cardImages[2] = resizeImageIcon(new ImageIcon("src/image3.jpg"));
+        cardImages[3] = resizeImageIcon(new ImageIcon("src/image4.jpg"));
+        cardImages[4] = resizeImageIcon(new ImageIcon("src/image5.jpg"));
+        cardImages[5] = resizeImageIcon(new ImageIcon("src/image6.jpg"));
+        cardImages[6] = resizeImageIcon(new ImageIcon("src/image7.jpg"));
+        cardImages[7] = resizeImageIcon(new ImageIcon("src/image8.jpg"));
+        // 나머지 이미지도 동일하게 추가
 
         // 숫자 카드 랜덤으로 초기화
         for (int i = 0; i < 8; i++) {
@@ -68,11 +69,11 @@ public class MemoryGame extends JFrame implements ActionListener {
                 if (clickedCard1 == -1) {
                     clickedCard1 = i;
                     flipped[i] = true;
-                    buttons[i].setBackground(cardColors[cardNumbers.get(i)]);
+                    buttons[i].setIcon(cardImages[cardNumbers.get(i)]); // 이미지 설정
                 } else if (clickedCard2 == -1 && i != clickedCard1) {
                     clickedCard2 = i;
                     flipped[i] = true;
-                    buttons[i].setBackground(cardColors[cardNumbers.get(i)]);
+                    buttons[i].setIcon(cardImages[cardNumbers.get(i)]); // 이미지 설정
                     processing = true;
                     Timer timer = new Timer(1000, new ActionListener() {
                         public void actionPerformed(ActionEvent evt) {
@@ -92,8 +93,8 @@ public class MemoryGame extends JFrame implements ActionListener {
             buttons[clickedCard1].setEnabled(false);
             buttons[clickedCard2].setEnabled(false);
         } else {
-            buttons[clickedCard1].setBackground(null);
-            buttons[clickedCard2].setBackground(null);
+            buttons[clickedCard1].setIcon(null); // 이미지 제거
+            buttons[clickedCard2].setIcon(null); // 이미지 제거
             flipped[clickedCard1] = false;
             flipped[clickedCard2] = false;
         }
@@ -102,6 +103,14 @@ public class MemoryGame extends JFrame implements ActionListener {
         processing = false;
     }
 
+    private ImageIcon resizeImageIcon(ImageIcon icon) {
+        int width = 100; // 원하는 너비
+        int height = 100; // 원하는 높이
+
+        Image image = icon.getImage();
+        Image newImage = image.getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
+        return new ImageIcon(newImage);
+    }
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
