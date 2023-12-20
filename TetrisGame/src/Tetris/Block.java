@@ -7,7 +7,8 @@ public class Block {
     private int[][] shape;
     private int size;
     private Color color;
-    int x, y;
+    private int x, y;
+    private int minX, maxX, maxY;
 
     public Block(int[][] shape, Color color) {
         size = 30;
@@ -30,13 +31,62 @@ public class Block {
         shape = rotatedShape;
     }
 
+    public void setMaxPosition(int minx, int maxx, int y) {
+        minX = minx / size;
+        maxX = maxx / size;
+        maxY = y / size;
+    }
+
+    public int getBlockWidth() {
+        int maxWidth = 0;
+        for (int i = 0; i < shape.length; i++) {
+            for (int j = 0; j < shape[i].length; j++) {
+                if (shape[i][j] == 1 && j + 1 > maxWidth) {
+                    maxWidth = j + 1;
+                }
+            }
+        }
+        return maxWidth;
+    }
+
+    public int getBlockHeight() {
+        int maxHeight = 0;
+        for (int i = 0; i < shape.length; i++) {
+            for (int j = 0; j < shape[i].length; j++) {
+                if (shape[i][j] == 1 && i + 1 > maxHeight) {
+                    maxHeight = i + 1;
+                }
+            }
+        }
+        return maxHeight;
+    }
+
+    public int getLeftSpace() {
+        int leftSpace = shape[0].length;
+        for (int i = 0; i < shape.length; i++) {
+            int currentRowSpace = 0;
+            while (currentRowSpace < shape[i].length && shape[i][currentRowSpace] == 0) {
+                currentRowSpace++;
+            }
+            leftSpace = Math.min(leftSpace, currentRowSpace);
+        }
+        return leftSpace;
+    }
+
     public void moveRight() {
+        if ((x + getBlockWidth()) < (690 / size))
         x += 1;
     }
 
-    public void moveLeft() { x -= 1; }
+    public void moveLeft() {
+        if (x * size - getLeftSpace() * size > 330)
+            x -= 1;
+    }
 
-    public void moveDown() { y += 1; }
+    public void moveDown() {
+        if ((y + getBlockHeight()) < 660 / size)
+            y += 1;
+    }
 
     public int[][] getShape() { return shape; }
 

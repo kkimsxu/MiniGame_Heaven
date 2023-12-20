@@ -11,24 +11,11 @@ public class Controller {
     private Screen screen;
     private Random random;
     private Timer timer;
+    private int index;
 
     public Controller(Screen screen) {
         this.screen = screen;
         this.random = new Random();
-
-            // 블록 초기화 (예시)
-        this.block = new Block(new int[][]{{0, 1, 0}, {0, 1, 0}, {0, 1, 0}, {0, 1, 0}}, Color.CYAN);
-        this.block.setPosition(5, 5);  // 초기 위치 설정
-
-        screen.repaint();  // 화면 갱신
-
-        timer = new Timer(1000, new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                block.moveDown();
-                screen.repaint();
-            }
-        });
-        timer.start();
 
         int[][][] shapes = {
                 {{1, 1}, {1, 1}}, // oShape
@@ -49,12 +36,38 @@ public class Controller {
                 Color.RED,    // z
                 Color.GREEN   // s
         };
+
+        createRandomBlock(shapes, colors);
+
+        screen.repaint();  // 화면 갱신
+
+        timer = new Timer(1000, new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (block.getY() + block.getBlockHeight() < 660) {
+                    block.moveDown();
+                    System.out.println(block.getY());
+                    System.out.println(block.getX());
+                    screen.repaint();
+                }
+                else {
+                    createRandomBlock(shapes, colors);
+                    block.setPosition(16, 2);
+                    screen.repaint();
+//                    timer.stop();
+                }
+            }
+        });
+        timer.start();
+
+        if (block.getY() != 540)
+            timer.start();
+        else timer.stop();
     }
 
     private void createRandomBlock(int[][][] s, Color[] c) {
-        int index = random.nextInt(s.length);
+        index = random.nextInt(s.length);
         block = new Block(s[index], c[index]);
-        block.setPosition(0, 0);
+        block.setPosition(16, 2);
     }
 
     public Block getBlock() { return block; }

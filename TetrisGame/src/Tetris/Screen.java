@@ -38,18 +38,18 @@ public class Screen extends JPanel {
         g.setColor(Color.black);
         g.fillRect(0, 0, WIDTH, HEIGHT);
         g.setColor(Color.white);
-        g.fillRect(325, 35, GAME_WIDTH+10, GAME_HEIGHT+10); // Game Rect
-        g.fillRect(780, 40, 200, 130); // Score Rect
-        g.fillRect(780, 190, 200, 455); // Next Rect
+        g.fillRect(325, 55, GAME_WIDTH+10, GAME_HEIGHT+10); // Game Rect
+        g.fillRect(780, 60, 200, 130); // Score Rect
+        g.fillRect(780, 210, 200, 455); // Next Rect
         g.setColor(Color.black);
-        g.fillRect(330, 40, GAME_WIDTH, GAME_HEIGHT); // Game Rect
-        g.fillRect(785, 45, 190, 120); // Score Rect
-        g.fillRect(785, 195, 190, 445); // Next Rect
+        g.fillRect(330, 60, GAME_WIDTH, GAME_HEIGHT); // Game Rect
+        g.fillRect(785, 65, 190, 120); // Score Rect
+        g.fillRect(785, 215, 190, 445); // Next Rect
 
         g.setColor(Color.white);
         g.setFont(new Font("Arial", Font.BOLD, 30));
-        g.drawString("SCORE", 828, 85);
-        g.drawString("NEXT", 840, 235);
+        g.drawString("SCORE", 828, 105);
+        g.drawString("NEXT", 840, 255);
 
         if (controller != null && controller.getBlock() != null) {
             Block block = controller.getBlock();
